@@ -24,12 +24,13 @@ app.post(URI, async (req, res) =>{
 
     const chatId = req.body.message.chat.id
     const message = req.body.message.text
+    const user = req.body.message.chat.username
 
     // console.log(chatId)
 
     await axios.post(`${TELEGRAM_API}/sendMessage`, {
         chat_id: chatId,
-        text: message
+        text: `hello ${user}`
     })
     return res.send()
 })
