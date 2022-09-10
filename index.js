@@ -20,17 +20,16 @@ const init = async () => {
 }
 
 app.post(URI, async (req, res) =>{
-    // console.log(req.body)
 
     const chatId = req.body.message.chat.id
-    const message = req.body.message.text
     const user = req.body.message.chat.username
 
-    // console.log(chatId)
+    const joke_api = await axios.get(`https://api.chucknorris.io/jokes/random`)
+    const joke = joke_api.data.value
 
     await axios.post(`${TELEGRAM_API}/sendMessage`, {
         chat_id: chatId,
-        text: `hello ${user}`
+        text: `hello ${user}, ${joke}`
     })
     return res.send()
 })
@@ -39,5 +38,3 @@ app.listen(process.env.PORT || 5000, async () =>{
     console.log(`app is running on port`, process.env.PORT  || 5000);
     await init()
 })
-
-
